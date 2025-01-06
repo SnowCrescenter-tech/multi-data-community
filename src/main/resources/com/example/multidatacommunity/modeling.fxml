@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.chart.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<GridPane fx:controller="com.example.multidatacommunity.ModelingController" xmlns:fx="http://javafx.com/fxml" alignment="CENTER" hgap="10" vgap="10">
+    <Label text="选择模型：" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+    <ComboBox fx:id="modelSelector" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+    <Label text="参数1：" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+    <TextField fx:id="parameterField1" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+    <Label text="参数2：" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+    <TextField fx:id="parameterField2" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+    <Button text="生成" onAction="#onGenerate" GridPane.columnIndex="0" GridPane.rowIndex="3" />
+    <Button text="发送" onAction="#onSend" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+    <LineChart fx:id="chart" title="建模结果" GridPane.columnIndex="0" GridPane.rowIndex="4" GridPane.columnSpan="2">
+        <xAxis>
+            <NumberAxis />
+        </xAxis>
+        <yAxis>
+            <NumberAxis />
+        </yAxis>
+    </LineChart>
+</GridPane>

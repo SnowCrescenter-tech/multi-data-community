@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<BorderPane fx:controller="com.example.multidatacommunity.ChatController" xmlns:fx="http://javafx.com/fxml">
+    <left>
+        <VBox spacing="10" alignment="CENTER" style="-fx-padding: 10;">
+            <Label text="用户信息" style="-fx-font-size: 16;" />
+            <TextArea fx:id="userInfo" editable="false" wrapText="true" />
+        </VBox>
+    </left>
+    <center>
+        <VBox spacing="10" alignment="CENTER" style="-fx-padding: 10;">
+            <TextArea fx:id="chatHistory" editable="false" wrapText="true" style="-fx-font-size: 14;" />
+            <HBox spacing="10">
+                <TextField fx:id="messageInput" HBox.hgrow="ALWAYS" />
+                <Button text="发送" onAction="#onSendMessage" />
+                <Button text="+" onAction="#onAddOption" />
+            </HBox>
+        </VBox>
+    </center>
+    <bottom>
+        <HBox spacing="10" alignment="CENTER" style="-fx-padding: 10;">
+            <Button text="录音" onAction="#onRecordAudio" />
+            <Button text="发送录音" onAction="#onSendAudio" />
+            <Button text="发送图片" onAction="#onSendImage" />
+            <Button text="数学建模" onAction="#onModeling" />
+        </HBox>
+    </bottom>
+</BorderPane>

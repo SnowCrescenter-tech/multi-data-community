@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<GridPane fx:controller="com.example.multidatacommunity.LoginController" xmlns:fx="http://javafx.com/fxml" alignment="CENTER" hgap="10" vgap="10">
+    <Label text="登录界面" GridPane.columnIndex="0" GridPane.rowIndex="0" GridPane.columnSpan="2" />
+    <Label text="选择用户：" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+    <ComboBox fx:id="userSelector" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+    <Button text="登录" fx:id="loginButton" onAction="#onLogin" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+    <Label fx:id="errorLabel" style="-fx-text-fill: red;" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+</GridPane>
