@@ -5,18 +5,21 @@ import com.hivemq.client.mqtt.MqttClientState;
 import com.hivemq.client.mqtt.datatypes.MqttClientIdentifier;
 import com.hivemq.client.mqtt.datatypes.MqttQos;
 import com.hivemq.client.mqtt.mqtt3.Mqtt3AsyncClient;
-import com.hivemq.client.mqtt.mqtt3.message.publish.Mqtt3Publish;
 
 public class MqttClientUtil {
     private static Mqtt3AsyncClient client;
 
-    public static boolean connect(String userId) {
+    public static boolean connect(String clientId, String username, String password, String hostUrl) {
         try {
             client = MqttClient.builder()
                     .useMqttVersion3()
-                    .identifier(userId)
-                    .serverHost("broker.hivemq.com")
+                    .identifier(clientId)
+                    .serverHost(hostUrl)
                     .serverPort(1883)
+                    .simpleAuth()
+                    .username(username)
+                    .password(password.getBytes())
+                    .applySimpleAuth()
                     .buildAsync();
 
             client.connectWith()
@@ -40,9 +43,10 @@ public class MqttClientUtil {
     public static void sendMessage(String topic, String message) {
         try {
             if (client.getState() == MqttClientState.CONNECTED) {
+                String jsonMessage = message;
                 client.publishWith()
                         .topic(topic)
-                        .payload(message.getBytes())
+                        .payload(jsonMessage.getBytes())
                         .qos(MqttQos.AT_LEAST_ONCE)
                         .send()
                         .whenComplete((publish, throwable) -> {
@@ -62,6 +66,6 @@ public class MqttClientUtil {
 
     public static String getClientInfo() {
         return "ClientID: " + client.getConfig().getClientIdentifier().orElse(MqttClientIdentifier.of("Unknown")) +
-                "\nConnected: " + (client.getState() == MqttClientState.CONNECTED);
+                "\nConnected: " + (client.getState());
     }
 }

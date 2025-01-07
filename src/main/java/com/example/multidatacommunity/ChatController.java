@@ -6,6 +6,7 @@ import javafx.scene.control.TextField;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
+import javax.swing.*;
 import java.io.File;
 
 public class ChatController {
@@ -16,9 +17,11 @@ public class ChatController {
     @FXML
     private TextField messageInput;
 
+    private boolean isRecording = false;
+
     @FXML
     public void initialize() {
-        userInfo.setText(com.example.multidatacommunity.MqttClientUtil.getClientInfo());
+        userInfo.setText(MqttClientUtil.getClientInfo());
     }
 
     @FXML
@@ -26,7 +29,7 @@ public class ChatController {
         String message = messageInput.getText();
         if (!message.isEmpty()) {
             String jsonMessage = "{\"type\":\"txt\",\"content\":\"" + message + "\"}";
-            com.example.multidatacommunity.MqttClientUtil.sendMessage("chat/topic", jsonMessage);
+            MqttClientUtil.sendMessage("/k176bpRR9g2/user_one/user/update", jsonMessage);
             chatHistory.appendText("我: " + message + "\n");
             messageInput.clear();
         }
@@ -40,21 +43,26 @@ public class ChatController {
 
     @FXML
     public void onRecordAudio() {
-        // 实现录音功能
-        File audioFile = RecordingUtil.recordAudio();
-        if (audioFile != null) {
-            chatHistory.appendText("我: [语音]\n");
+        if (!isRecording) {
+            isRecording = true;
+            RecordingUtil.startRecording();
+            chatHistory.appendText("开始录音...\n");
+        } else {
+            isRecording = false;
+            RecordingUtil.stopRecording();
+            chatHistory.appendText("录音结束: [语音]\n");
         }
     }
 
     @FXML
     public void onSendAudio() {
         // 发送录音
-        File audioFile = new File("temp/recording.wav");
+        File audioFile = new File("temp/recording.mp3");
         if (audioFile.exists()) {
-            String encodedAudio = RecordingUtil.encodeToBase64(audioFile);
+            String encodedAudio = RecordingUtil.encodeToBase64();
             String jsonMessage = "{\"type\":\"record\",\"content\":\"" + encodedAudio + "\"}";
-            com.example.multidatacommunity.MqttClientUtil.sendMessage("chat/topic", jsonMessage);
+            System.out.println(jsonMessage);
+            MqttClientUtil.sendMessage("/k176bpRR9g2/user_one/user/update", jsonMessage);
         }
     }
 
@@ -67,13 +75,14 @@ public class ChatController {
         if (selectedFile != null) {
             String encodedImage = ImageUtil.encodeToBase64(selectedFile);
             String jsonMessage = "{\"type\":\"image\",\"content\":\"" + encodedImage + "\"}";
-            com.example.multidatacommunity.MqttClientUtil.sendMessage("chat/topic", jsonMessage);
+//            System.out.println(jsonMessage);
+            MqttClientUtil.sendMessage("/k176bpRR9g2/user_one/user/update", jsonMessage);
         }
     }
 
     @FXML
     public void onModeling() {
         // 显示数学建模界面
-        com.example.multidatacommunity.ModelingUtil.showModelingWindow();
+        ModelingUtil.showModelingWindow();
     }
 }
