@@ -19,3 +19,4 @@ public class MainApp extends Application {
         launch(args);
     }
 }
+//正常发送
