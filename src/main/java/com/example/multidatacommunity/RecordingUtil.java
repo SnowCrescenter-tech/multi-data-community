@@ -154,4 +154,28 @@ public class RecordingUtil {
             e.printStackTrace();
         }
     }
+
+    public static void playBase64Audio(String base64Audio) {
+        try {
+            byte[] audioData = Base64.getDecoder().decode(base64Audio);
+            AudioInputStream audioStream = AudioSystem.getAudioInputStream(new ByteArrayInputStream(audioData));
+            AudioFormat format = audioStream.getFormat();
+            DataLine.Info info = new DataLine.Info(SourceDataLine.class, format);
+            SourceDataLine line = (SourceDataLine) AudioSystem.getLine(info);
+            line.open(format);
+            line.start();
+
+            byte[] buffer = new byte[4096];
+            int bytesRead;
+            while ((bytesRead = audioStream.read(buffer, 0, buffer.length)) != -1) {
+                line.write(buffer, 0, bytesRead);
+            }
+
+            line.drain();
+            line.close();
+            audioStream.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }

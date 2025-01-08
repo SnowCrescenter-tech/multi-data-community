@@ -5,6 +5,7 @@ module multi.data.community {
     requires javafx.swing;
     requires org.bytedeco.ffmpeg;
     requires ffmpeg;
+    requires java.sql;
 
     opens com.example.multidatacommunity to javafx.fxml;
     exports com.example.multidatacommunity;
