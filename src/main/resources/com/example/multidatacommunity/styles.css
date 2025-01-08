@@ -1,33 +1,70 @@
 /* styles.css */
 
+/* 全局样式 */
+.root {
+    /* 字体设置 */
+    -fx-font-family: "Arial";
+}
+/* VBox容器样式 */
 .vbox-container {
     -fx-background-color: linear-gradient(to bottom, #e0e0e0, #cccccc);
     -fx-background-radius: 10;
     -fx-padding: 10;
     -fx-spacing: 10;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.25), 10, 0, 0, 0);
 }
 
+/* 按钮样式 */
 .button-class {
-    -fx-background-color: #cccccc;
-    -fx-text-fill: #333333;
-    -fx-padding: 5 10 5 10;
+    -fx-background-color: #2C3E50; /* 深海蓝 */
+    -fx-text-fill: white;
+    -fx-padding: 10 20;
     -fx-font-size: 14;
+    -fx-background-radius: 5;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.25), 5, 0, 0, 0);
 }
 
 .button-class:hover {
-    -fx-background-color: #aaaaaa;
+    -fx-background-color: #BDC3C7; /* 悬浮色 */
 }
 
+/* 标签样式 */
 .label-class {
     -fx-font-size: 16;
-    -fx-text-fill: #333333;
+    -fx-text-fill: #2C3E50; /* 文本色 */
     -fx-alignment: center-left;
 }
 
+/* 文本区域样式 */
 .text-area-class {
     -fx-background-color: #f0f0f0;
     -fx-border-color: #cccccc;
     -fx-border-radius: 5;
     -fx-padding: 5;
     -fx-font-size: 14;
+    -fx-effect: innershadow(gaussian, rgba(0,0,0,0.25), 5, 0, 0, 0);
+}
+
+/* 输入框样式 */
+.text-field-class {
+    -fx-background-color: white;
+    -fx-border-color: #cccccc;
+    -fx-border-radius: 5;
+    -fx-padding: 5;
+    -fx-font-size: 14;
+    -fx-effect: innershadow(gaussian, rgba(0,0,0,0.25), 5, 0, 0, 0);
+}
+
+/* 切换按钮样式 */
+.toggle-button-class {
+    -fx-background-color: #2C3E50; /* 深海蓝 */
+    -fx-text-fill: white;
+    -fx-padding: 10 20;
+    -fx-font-size: 14;
+    -fx-background-radius: 5;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.25), 5, 0, 0, 0);
+}
+
+.toggle-button-class:selected {
+    -fx-background-color: #3498DB; /* 明亮蓝 */
 }

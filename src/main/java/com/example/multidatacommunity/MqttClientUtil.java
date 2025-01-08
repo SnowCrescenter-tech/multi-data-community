@@ -77,15 +77,19 @@ public class MqttClientUtil {
         Pattern pattern = Pattern.compile("Optional\\[(\\w+)\\.(\\w+)\\|");
         Matcher matcher = pattern.matcher(tempinfo);
 
-        if (matcher.find()) {
-            produceKey = matcher.group(1);
+            if (matcher.find()) {
+                produceKey = matcher.group(1);
             deviceName = matcher.group(2);
             System.out.println("Produce Key: " + produceKey);
             System.out.println("Device Name: " + deviceName);
         } else {
             System.out.println("No match found");
         }
-        info = tempinfo;
+        info =
+            "产品密钥：" + produceKey +
+            "\n当前设备名称: " + deviceName +
+            "\n目前与云端的连接状态: " + ((client.getState()).toString().equals("CONNECTING")?"已连接":"未连接")
+        ;
         return info;
 //                client.getConfig().getClientIdentifier().orElse(MqttClientIdentifier.of("Unknown")) +
 //                "\nConnected: " + (client.getState());

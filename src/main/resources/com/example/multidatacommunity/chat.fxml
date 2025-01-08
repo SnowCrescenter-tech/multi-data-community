@@ -15,52 +15,43 @@
     <left>
         <VBox alignment="TOP_CENTER" spacing="10" styleClass="vbox-container">
             <Label styleClass="label-class" text="用户信息" />
-            <TextArea fx:id="userInfo" editable="false" styleClass="text-area-class" wrapText="true" />
+            <TextArea fx:id="userInfo" editable="false" prefHeight="293.0" prefWidth="563.0" styleClass="text-area-class" wrapText="true" />
         </VBox>
     </left>
     <center>
         <VBox alignment="TOP_CENTER" spacing="10" styleClass="vbox-container">
-         <Label text="聊天发送操作框">
-            <font>
-               <Font size="15.0" />
-            </font>
-         </Label>
-            <TextArea fx:id="chatHistory" editable="false" styleClass="text-area-class" wrapText="true" />
-            <HBox spacing="10">
-                <TextField fx:id="messageInput" HBox.hgrow="ALWAYS" />
+            <Label text="聊天发送操作框">
+                <font>
+                    <Font size="15.0" />
+                </font>
+            </Label>
+            <TextArea fx:id="chatHistory" editable="false" prefHeight="203.0" prefWidth="645.0" styleClass="text-area-class" wrapText="true" />
+            <HBox alignment="CENTER" spacing="10">
+                <TextField fx:id="messageInput" prefHeight="46.0" prefWidth="508.0" styleClass="text-field-class" HBox.hgrow="ALWAYS" />
                 <Button onAction="#onSendMessage" styleClass="button-class" text="发送" />
                 <Button fx:id="addButton" onAction="#onAddOption" styleClass="button-class" text="+" />
             </HBox>
             <HBox fx:id="additionalButtons" spacing="80.0" visible="false">
-                <ToggleButton fx:id="recordButton" onAction="#onRecordAudio" styleClass="button-class" text="录音">
-               <opaqueInsets>
-                  <Insets />
-               </opaqueInsets></ToggleButton>
-                <Button onAction="#onSendAudio" styleClass="button-class" text="发送录音">
-               <opaqueInsets>
-                  <Insets />
-               </opaqueInsets></Button>
+                <ToggleButton fx:id="recordButton" onAction="#onRecordAudio" styleClass="button-class" text="录音" />
+                <Button onAction="#onSendAudio" styleClass="button-class" text="发送录音" />
                 <Button onAction="#onSendImage" styleClass="button-class" text="发送图片" />
                 <Button onAction="#onModeling" styleClass="button-class" text="数学建模" />
-            <opaqueInsets>
-               <Insets />
-            </opaqueInsets>
             <padding>
-               <Insets left="40.0" />
+               <Insets left="24.0" />
             </padding>
             </HBox>
         </VBox>
     </center>
-   <top>
-      <VBox alignment="CENTER" BorderPane.alignment="CENTER">
-         <children>
-            <Label alignment="CENTER" prefHeight="48.0" prefWidth="199.0" text="聊天信息接收框" textAlignment="CENTER">
-               <font>
-                  <Font size="19.0" />
-               </font>
-            </Label>
-            <TextArea fx:id="chatHistory1" editable="false" prefHeight="275.0" prefWidth="1248.0" styleClass="text-area-class" wrapText="true" />
-         </children>
-      </VBox>
-   </top>
+    <top>
+        <VBox alignment="CENTER" BorderPane.alignment="CENTER">
+            <children>
+                <Label alignment="CENTER" prefHeight="48.0" prefWidth="199.0" text="聊天信息接收框" textAlignment="CENTER">
+                    <font>
+                        <Font size="19.0" />
+                    </font>
+                </Label>
+                <TextArea fx:id="chatHistory1" editable="false" prefHeight="425.0" prefWidth="1248.0" styleClass="text-area-class" wrapText="true" />
+            </children>
+        </VBox>
+    </top>
 </BorderPane>
