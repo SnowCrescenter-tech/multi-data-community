@@ -33,7 +33,7 @@ public class LoginController {
 
     @FXML
     public void initialize() {
-        userSelector.getItems().addAll("用户A", "用户B", "用户C");
+        userSelector.getItems().addAll("用户A");
         userSelector.setValue("用户A");
         loadLoginDetails();
     }

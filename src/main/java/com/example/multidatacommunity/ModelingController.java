@@ -186,7 +186,7 @@ public class ModelingController {
         saveChartAsImage(); // 确保在发送之前保存图片
         if (generatedImage != null && generatedImage.exists()) {
             String encodedData = ImageUtil.encodeToBase64(generatedImage);
-            MqttClientUtil.sendMessage("/k176bpRR9g2/user_one/user/update", "{\"type\":\"model\",\"content\":\"" + encodedData + "\"}");
+            MqttClientUtil.sendMessage("/k176bpRR9g2/user_one/user/update", "{\"username\":\"type\":\"model\",\"content\":\"" + encodedData + "\"}");
         } else {
             System.out.println("生成的图像文件不存在");
         }

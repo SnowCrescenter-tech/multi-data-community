@@ -34,7 +34,7 @@ public class ChatController {
     public void onSendMessage() {
         String message = messageInput.getText();
         if (!message.isEmpty()) {
-            String jsonMessage = "{\"type\":\"txt\",\"content\":\"" + message + "\"}";
+            String jsonMessage = "{\" username\":\"sender\",\"type\":\"txt\",\"content\":\"" + message + "\"}";
             MqttClientUtil.sendMessage("/k176bpRR9g2/user_one/user/update", jsonMessage);
             chatHistory.appendText("我: " + message + "\n");
             DatabaseUtil.saveMessage(message);

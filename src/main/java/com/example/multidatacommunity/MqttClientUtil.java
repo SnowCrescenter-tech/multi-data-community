@@ -65,7 +65,13 @@ public class MqttClientUtil {
     }
 
     public static String getClientInfo() {
-        return "ClientID: " + client.getConfig().getClientIdentifier().orElse(MqttClientIdentifier.of("Unknown")) +
-                "\nConnected: " + (client.getState());
+        String info;
+        String tempinfo;
+
+        tempinfo = String.valueOf(client.getConfig().getClientIdentifier());
+        info = tempinfo;
+        return info;
+//                client.getConfig().getClientIdentifier().orElse(MqttClientIdentifier.of("Unknown")) +
+//                "\nConnected: " + (client.getState());
     }
 }
