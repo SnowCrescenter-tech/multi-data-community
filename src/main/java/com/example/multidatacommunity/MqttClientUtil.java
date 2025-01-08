@@ -6,8 +6,13 @@ import com.hivemq.client.mqtt.datatypes.MqttClientIdentifier;
 import com.hivemq.client.mqtt.datatypes.MqttQos;
 import com.hivemq.client.mqtt.mqtt3.Mqtt3AsyncClient;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public class MqttClientUtil {
     private static Mqtt3AsyncClient client;
+    public static String produceKey;
+    public static String deviceName;
 
     public static boolean connect(String clientId, String username, String password, String hostUrl) {
         try {
@@ -68,7 +73,18 @@ public class MqttClientUtil {
         String info;
         String tempinfo;
 
-        tempinfo = String.valueOf(client.getConfig().getClientIdentifier());
+        tempinfo = client.getConfig().getClientIdentifier().toString();
+        Pattern pattern = Pattern.compile("Optional\\[(\\w+)\\.(\\w+)\\|");
+        Matcher matcher = pattern.matcher(tempinfo);
+
+        if (matcher.find()) {
+            produceKey = matcher.group(1);
+            deviceName = matcher.group(2);
+            System.out.println("Produce Key: " + produceKey);
+            System.out.println("Device Name: " + deviceName);
+        } else {
+            System.out.println("No match found");
+        }
         info = tempinfo;
         return info;
 //                client.getConfig().getClientIdentifier().orElse(MqttClientIdentifier.of("Unknown")) +

@@ -34,8 +34,8 @@ public class ChatController {
     public void onSendMessage() {
         String message = messageInput.getText();
         if (!message.isEmpty()) {
-            String jsonMessage = "{\" username\":\"sender\",\"type\":\"txt\",\"content\":\"" + message + "\"}";
-            MqttClientUtil.sendMessage("/k176bpRR9g2/user_one/user/update", jsonMessage);
+            String jsonMessage = "{\"username\":\""+MqttClientUtil.deviceName+"\",\"type\":\"txt\",\"content\":\"" + message + "\"}";
+            MqttClientUtil.sendMessage("/"+MqttClientUtil.produceKey+"/"+MqttClientUtil.deviceName+"/user/update", jsonMessage);
             chatHistory.appendText("我: " + message + "\n");
             DatabaseUtil.saveMessage(message);
             messageInput.clear();
@@ -60,8 +60,8 @@ public class ChatController {
         File audioFile = new File("temp/recording.mp3");
         if (audioFile.exists()) {
             String encodedAudio = RecordingUtil.encodeToBase64();
-            String jsonMessage = "{\"type\":\"record\",\"content\":\"" + encodedAudio + "\"}";
-            MqttClientUtil.sendMessage("/k176bpRR9g2/user_one/user/update", jsonMessage);
+            String jsonMessage = "{\"username\":\""+MqttClientUtil.deviceName+"\",\"type\":\"record\",\"content\":\"" + encodedAudio + "\"}";
+            MqttClientUtil.sendMessage("/"+MqttClientUtil.produceKey+"/"+MqttClientUtil.deviceName+"/user/update", jsonMessage);
             DatabaseUtil.saveAudio(encodedAudio);
 
             Button audioButton = new Button("播放语音");
@@ -82,8 +82,8 @@ public class ChatController {
         File selectedFile = fileChooser.showOpenDialog(new Stage());
         if (selectedFile != null) {
             String encodedImage = ImageUtil.encodeToBase64(selectedFile);
-            String jsonMessage = "{\"type\":\"image\",\"content\":\"" + encodedImage + "\"}";
-            MqttClientUtil.sendMessage("/k176bpRR9g2/user_one/user/update", jsonMessage);
+            String jsonMessage = "{\"username\":\""+MqttClientUtil.deviceName+"\",\"type\":\"image\",\"content\":\"" + encodedImage + "\"}";
+            MqttClientUtil.sendMessage("/"+MqttClientUtil.produceKey+"/"+MqttClientUtil.deviceName+"/user/update", jsonMessage);
         }
     }
 
