@@ -5,33 +5,62 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.control.ToggleButton?>
+<?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<?import javafx.scene.control.ToggleButton?>
-<AnchorPane prefHeight="451.0" prefWidth="1110.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.multidatacommunity.ChatController">
-    <children>
-        <VBox alignment="CENTER" layoutY="14.0" prefHeight="370.0" prefWidth="450.0" spacing="10" style="-fx-padding: 10;" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="30.0">
-            <Label style="-fx-font-size: 16;" text="用户信息" />
-            <TextArea fx:id="userInfo" editable="false" wrapText="true" />
-         <opaqueInsets>
-            <Insets right="10.0" />
-         </opaqueInsets>
+<BorderPane stylesheets="@styles.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.multidatacommunity.ChatController">
+    <left>
+        <VBox alignment="TOP_CENTER" spacing="10" styleClass="vbox-container">
+            <Label styleClass="label-class" text="用户信息" />
+            <TextArea fx:id="userInfo" editable="false" styleClass="text-area-class" wrapText="true" />
         </VBox>
-        <VBox alignment="CENTER" layoutX="472.0" layoutY="14.0" spacing="10" style="-fx-padding: 10;" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
-            <TextArea fx:id="chatHistory" editable="false" prefHeight="317.0" prefWidth="604.0" style="-fx-font-size: 14;" wrapText="true" />
+    </left>
+    <center>
+        <VBox alignment="TOP_CENTER" spacing="10" styleClass="vbox-container">
+         <Label text="聊天发送操作框">
+            <font>
+               <Font size="15.0" />
+            </font>
+         </Label>
+            <TextArea fx:id="chatHistory" editable="false" styleClass="text-area-class" wrapText="true" />
             <HBox spacing="10">
                 <TextField fx:id="messageInput" HBox.hgrow="ALWAYS" />
-                <Button onAction="#onSendMessage" text="发送" />
-                <Button onAction="#onAddOption" text="+" />
+                <Button onAction="#onSendMessage" styleClass="button-class" text="发送" />
+                <Button fx:id="addButton" onAction="#onAddOption" styleClass="button-class" text="+" />
+            </HBox>
+            <HBox fx:id="additionalButtons" spacing="80.0" visible="false">
+                <ToggleButton fx:id="recordButton" onAction="#onRecordAudio" styleClass="button-class" text="录音">
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets></ToggleButton>
+                <Button onAction="#onSendAudio" styleClass="button-class" text="发送录音">
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets></Button>
+                <Button onAction="#onSendImage" styleClass="button-class" text="发送图片" />
+                <Button onAction="#onModeling" styleClass="button-class" text="数学建模" />
+            <opaqueInsets>
+               <Insets />
+            </opaqueInsets>
+            <padding>
+               <Insets left="40.0" />
+            </padding>
             </HBox>
         </VBox>
-        <HBox alignment="CENTER" layoutX="483.0" layoutY="388.0" prefHeight="63.0" prefWidth="604.0" spacing="10" style="-fx-padding: 20;" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="10.0">
-            <ToggleButton fx:id="recordButton" onAction="#onRecordAudio" text="录音" />
-            <Button onAction="#onSendAudio" text="发送录音" />
-            <Button onAction="#onSendImage" text="发送图片" />
-            <Button onAction="#onModeling" text="数学建模" />
-        </HBox>
-    </children>
-</AnchorPane>
+    </center>
+   <top>
+      <VBox alignment="CENTER" BorderPane.alignment="CENTER">
+         <children>
+            <Label alignment="CENTER" prefHeight="48.0" prefWidth="199.0" text="聊天信息接收框" textAlignment="CENTER">
+               <font>
+                  <Font size="19.0" />
+               </font>
+            </Label>
+            <TextArea fx:id="chatHistory1" editable="false" prefHeight="275.0" prefWidth="1248.0" styleClass="text-area-class" wrapText="true" />
+         </children>
+      </VBox>
+   </top>
+</BorderPane>

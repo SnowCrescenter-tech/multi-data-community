@@ -1,0 +1,33 @@
+/* styles.css */
+
+.vbox-container {
+    -fx-background-color: linear-gradient(to bottom, #e0e0e0, #cccccc);
+    -fx-background-radius: 10;
+    -fx-padding: 10;
+    -fx-spacing: 10;
+}
+
+.button-class {
+    -fx-background-color: #cccccc;
+    -fx-text-fill: #333333;
+    -fx-padding: 5 10 5 10;
+    -fx-font-size: 14;
+}
+
+.button-class:hover {
+    -fx-background-color: #aaaaaa;
+}
+
+.label-class {
+    -fx-font-size: 16;
+    -fx-text-fill: #333333;
+    -fx-alignment: center-left;
+}
+
+.text-area-class {
+    -fx-background-color: #f0f0f0;
+    -fx-border-color: #cccccc;
+    -fx-border-radius: 5;
+    -fx-padding: 5;
+    -fx-font-size: 14;
+}

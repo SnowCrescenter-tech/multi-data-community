@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ComboBox?>
@@ -5,19 +6,19 @@
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.Button?>
-<GridPane xmlns:fx="http://javafx.com/fxml" fx:controller="com.example.multidatacommunity.LoginController" alignment="CENTER" hgap="10" vgap="10">
-    <!-- Existing elements -->
-    <Label text="选择用户：" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+
+<GridPane xmlns:fx="http://javafx.com/fxml" fx:controller="com.example.multidatacommunity.LoginController" alignment="CENTER" hgap="10" vgap="10" stylesheets="@styles.css">
+    <Label styleClass="label-class" text="选择用户：" GridPane.columnIndex="0" GridPane.rowIndex="0" />
     <ComboBox fx:id="userSelector" GridPane.columnIndex="1" GridPane.rowIndex="0" />
-    <Label text="Client ID：" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+    <Label styleClass="label-class" text="Client ID：" GridPane.columnIndex="0" GridPane.rowIndex="1" />
     <TextField fx:id="clientIdField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-    <Label text="Username：" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+    <Label styleClass="label-class" text="Username：" GridPane.columnIndex="0" GridPane.rowIndex="2" />
     <TextField fx:id="usernameField" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-    <Label text="Password：" GridPane.columnIndex="0" GridPane.rowIndex="3" />
+    <Label styleClass="label-class" text="Password：" GridPane.columnIndex="0" GridPane.rowIndex="3" />
     <PasswordField fx:id="passwordField" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-    <Label text="MQTT Host URL：" GridPane.columnIndex="0" GridPane.rowIndex="4" />
+    <Label styleClass="label-class" text="MQTT Host URL：" GridPane.columnIndex="0" GridPane.rowIndex="4" />
     <TextField fx:id="hostUrlField" GridPane.columnIndex="1" GridPane.rowIndex="4" />
     <CheckBox text="记住账号" fx:id="rememberMeCheckBox" GridPane.columnIndex="0" GridPane.rowIndex="5" GridPane.columnSpan="2" />
-    <Button text="登录" onAction="#onLogin" GridPane.columnIndex="0" GridPane.rowIndex="6" GridPane.columnSpan="2" />
+    <Button styleClass="button-class" text="登录" onAction="#onLogin" GridPane.columnIndex="0" GridPane.rowIndex="6" GridPane.columnSpan="2" />
     <Label fx:id="errorLabel" GridPane.columnIndex="0" GridPane.rowIndex="7" GridPane.columnSpan="2" style="-fx-text-fill: red;" />
 </GridPane>
