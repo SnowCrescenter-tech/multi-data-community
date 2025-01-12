@@ -15,13 +15,23 @@ import java.nio.file.StandardOpenOption;
 import java.util.Base64;
 
 public class RecordingUtil {
-    private static final String TEMP_FOLDER = "temp/";
-    private static final String RECORDING_WAV = TEMP_FOLDER + "recording.wav";
-    private static final String RECORDING_MP3 = TEMP_FOLDER + "recording.mp3";
-    private static TargetDataLine line;
-    private static Thread recordingThread;
-    private static String base64String;
+    // 音频文件相关常量定义
+    private static final String TEMP_FOLDER = "temp/";              // 临时文件夹路径
+    private static final String RECORDING_WAV = TEMP_FOLDER + "recording.wav";  // WAV临时文件
+    private static final String RECORDING_MP3 = TEMP_FOLDER + "recording.mp3";  // MP3临时文件
+    private static TargetDataLine line;         // 音频录制线程
+    private static Thread recordingThread;       // 录音线程
+    private static String base64String;         // 音频Base64编码
 
+    /**
+     * 开始录音
+     * 实现步骤：
+     * 1. 创建临时文件夹用于存储音频文件
+     * 2. 配置音频格式(44.1kHz采样率，16位深度，单声道)
+     * 3. 初始化音频捕获设备
+     * 4. 创建新线程进行录音，避免阻塞主线程
+     * 5. 通过缓冲区持续读取音频数据
+     */
     public static void startRecording() {
         try {
             File tempFolder = new File(TEMP_FOLDER);
@@ -41,17 +51,24 @@ public class RecordingUtil {
             line.open(format);
             line.start();
 
+            // 创建录音线程
             recordingThread = new Thread(() -> {
                 try (ByteArrayOutputStream out = new ByteArrayOutputStream()) {
-                    byte[] buffer = new byte[4096];
+                    byte[] buffer = new byte[4096];  // 4KB缓冲区
                     while (line.isOpen()) {
+                        // 从音频输入设备读取数据
                         int bytesRead = line.read(buffer, 0, buffer.length);
+                        // 将读取的数据写入字节数组输出流
                         out.write(buffer, 0, bytesRead);
                     }
+                    // 将录制的音频数据转换为WAV格式
                     byte[] audioData = out.toByteArray();
                     AudioInputStream ais = new AudioInputStream(
-                            new ByteArrayInputStream(audioData), format, audioData.length / format.getFrameSize()
+                            new ByteArrayInputStream(audioData), 
+                            format,  // 音频格式：44.1kHz, 16-bit, 单声道
+                            audioData.length / format.getFrameSize()  // 计算音频帧数
                     );
+                    // 保存为WAV文件
                     AudioSystem.write(ais, AudioFileFormat.Type.WAVE, new File(RECORDING_WAV));
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -64,6 +81,12 @@ public class RecordingUtil {
         }
     }
 
+    /**
+     * 停止录音并转换格式
+     * - 停止录音线程
+     * - 将WAV转换为MP3
+     * - 生成Base64编码
+     */
     public static void stopRecording() {
         File mp3File = null;
         try {
@@ -91,11 +114,15 @@ public class RecordingUtil {
     }
 
     /**
-     * 使用 FFmpeg 将 WAV 文件转换为 MP3 文件
-     *
-     * @param wavFile 输入的 WAV 文件
-     * @param mp3File 输出的 MP3 文件
-     * @throws IOException 如果文件操作失败
+     * 将WAV音频转换为MP3格式
+     * 实现步骤：
+     * 1. 初始化FFmpeg转码器
+     * 2. 配置转换参数：
+     *    - 使用LAME编码器
+     *    - 设置比特率128kbps
+     *    - 保持单声道
+     *    - 保持44.1kHz采样率
+     * 3. 执行转换过程
      */
     private static void convertWavToMp3UsingFFmpeg(File wavFile, File mp3File) throws IOException {
         try {
@@ -155,6 +182,15 @@ public class RecordingUtil {
         }
     }
 
+    /**
+     * 播放Base64编码的音频
+     * 实现步骤：
+     * 1. 将Base64字符串解码为字节数组
+     * 2. 创建音频输入流
+     * 3. 获取音频格式信息
+     * 4. 初始化音频播放设备
+     * 5. 通过缓冲区写入音频数据进行播放
+     */
     public static void playBase64Audio(String base64Audio) {
         try {
             byte[] audioData = Base64.getDecoder().decode(base64Audio);

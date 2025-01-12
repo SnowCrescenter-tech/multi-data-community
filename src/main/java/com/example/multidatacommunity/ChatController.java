@@ -10,6 +10,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.layout.HBox;
+import javafx.scene.web.WebView;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -17,27 +18,40 @@ import javafx.util.Duration;
 import java.io.File;
 
 public class ChatController {
+    // FXML注入的UI组件
     @FXML
-    private TextArea userInfo;
+    private TextArea userInfo;      // 用户信息显示区域
     @FXML
-    private TextArea chatHistory;
+    private TextArea chatHistory;   // 聊天历史记录显示区域
     @FXML
-    private TextField messageInput;
+    private TextField messageInput; // 消息输入框
     @FXML
-    private ToggleButton recordButton;
+    private ToggleButton recordButton; // 录音按钮
     @FXML
-    private HBox additionalButtons;
+    private HBox additionalButtons;  // 附加功能按钮容器
     @FXML
-    private Button addButton;
+    private Button addButton;       // 展开/收起附加功能的按钮
+    @FXML
+    private WebView chatwebView;    // Web视图组件，用于显示云端数据
 
     @FXML
     public void initialize() {
+        // 初始化用户信息显示
         userInfo.setText(MqttClientUtil.getClientInfo());
+        
+        // 设置消息输入框的回车键监听
         messageInput.setOnKeyPressed(event -> {
             switch (event.getCode()) {
                 case ENTER -> onSendMessage();
             }
         });
+        
+        // 初始化Web视图，添加空值检查
+        if (chatwebView != null) {
+            chatwebView.getEngine().load("http://iot.arorms.cn:8080/");
+        } else {
+            System.err.println("WebView初始化失败！");
+        }
     }
 
     @FXML
@@ -49,7 +63,9 @@ public class ChatController {
                 return;
             }
 
+            // 构建MQTT消息格式: {"username":"设备名","type":"txt","content":"消息内容"}
             String jsonMessage = "{\"username\":\""+MqttClientUtil.deviceName+"\",\"type\":\"txt\",\"content\":\"" + message + "\"}";
+            // 发送消息到指定主题: /产品密钥/设备名/user/update
             MqttClientUtil.sendMessage("/"+MqttClientUtil.produceKey+"/"+MqttClientUtil.deviceName+"/user/update", jsonMessage);
             chatHistory.appendText("我: " + message + "\n");
             DatabaseUtil.saveMessage(message);
@@ -57,10 +73,15 @@ public class ChatController {
         }
     }
 
+    // 使用正则表达式检查是否包含JSON特殊字符，防止消息格式错误
     private boolean containsIllegalCharacters(String message) {
         return message.matches(".*[\\{\\}\\[\\]''\"\"/\\\\].*");
     }
 
+    /**
+     * 显示警告对话框
+     * @param message 警告信息
+     */
     private void showAlert(String message) {
         Alert alert = new Alert(Alert.AlertType.WARNING);
         alert.setTitle("非法字符");
@@ -131,15 +152,21 @@ public class ChatController {
         }
     }
 
+    /**
+     * 显示附加功能按钮的动画效果
+     */
     private void showAdditionalButtons() {
+        // 创建平移动画：从下方滑入
         TranslateTransition slideIn = new TranslateTransition(Duration.millis(300), additionalButtons);
-        slideIn.setFromY(additionalButtons.getHeight());
-        slideIn.setToY(0);
+        slideIn.setFromY(additionalButtons.getHeight());  // 从控件高度的位置开始
+        slideIn.setToY(0);  // 移动到原始位置
 
+        // 创建淡入动画：从透明到不透明
         FadeTransition fadeIn = new FadeTransition(Duration.millis(300), additionalButtons);
-        fadeIn.setFromValue(0);
-        fadeIn.setToValue(1);
+        fadeIn.setFromValue(0);  // 完全透明
+        fadeIn.setToValue(1);    // 完全不透明
 
+        // 组合两个动画：先平移后淡入
         SequentialTransition transition = new SequentialTransition(slideIn, fadeIn);
         transition.setOnFinished(event -> additionalButtons.setVisible(true));
         transition.play();

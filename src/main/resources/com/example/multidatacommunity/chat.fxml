@@ -10,17 +10,18 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.web.WebView?>
 
 <BorderPane stylesheets="@styles.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.multidatacommunity.ChatController">
     <left>
         <VBox alignment="TOP_CENTER" spacing="10" styleClass="vbox-container">
-            <Label styleClass="label-class" text="用户信息" />
+            <Label styleClass="label-class" text="设备信息" />
             <TextArea fx:id="userInfo" editable="false" prefHeight="293.0" prefWidth="563.0" styleClass="text-area-class" wrapText="true" />
         </VBox>
     </left>
     <center>
         <VBox alignment="TOP_CENTER" spacing="10" styleClass="vbox-container">
-            <Label text="聊天发送操作框">
+            <Label text="设备信息发送操作框">
                 <font>
                     <Font size="15.0" />
                 </font>
@@ -45,12 +46,12 @@
     <top>
         <VBox alignment="CENTER" BorderPane.alignment="CENTER">
             <children>
-                <Label alignment="CENTER" prefHeight="48.0" prefWidth="199.0" text="聊天信息接收框" textAlignment="CENTER">
+                <Label alignment="CENTER" prefHeight="48.0" prefWidth="199.0" text="云端信息统计" textAlignment="CENTER">
                     <font>
                         <Font size="19.0" />
                     </font>
                 </Label>
-                <TextArea fx:id="chatHistory1" editable="false" prefHeight="425.0" prefWidth="1248.0" styleClass="text-area-class" wrapText="true" />
+                <WebView fx:id="chatwebView" prefHeight="425.0" prefWidth="1248.0" />
             </children>
         </VBox>
     </top>
